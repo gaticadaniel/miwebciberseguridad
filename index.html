@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portafolio — Navbar con icono hamburguesa</title>
+  <style>
+    /* Reset simple */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;line-height:1.4;color:#222}
+
+    /* Contenedor */
+    .container{max-width:1100px;margin:0 auto;padding:1rem}
+
+    /* NAV */
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1rem;gap:1rem}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
+    .brand .logo{width:42px;height:42px;border-radius:8px;background:linear-gradient(135deg,#4f46e5,#06b6d4);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+
+    /* Links desktop */
+    .nav-links{display:flex;gap:1rem;align-items:center}
+    .nav-links a{padding:.5rem .8rem;border-radius:8px;text-decoration:none;color:inherit;font-weight:600}
+    .nav-links a:hover{background:#f3f4f6}
+
+    /* Botones */
+    .btn-primary{background:#4f46e5;color:white;padding:.5rem .9rem;border-radius:8px;text-decoration:none;font-weight:700}
+    .btn-outline{border:1px solid #e5e7eb;padding:.45rem .75rem;border-radius:8px;text-decoration:none}
+
+    /* Hamburguesa */
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:.4rem;align-items:center}
+    .hamburger .bar{display:block;width:22px;height:2px;background:#111;margin:4px 0;border-radius:2px;transition:all .25s ease}
+
+    /* Mobile nav overlay */
+    .mobile-nav{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(2px);display:none;align-items:flex-start;justify-content:flex-end}
+    .mobile-panel{width:280px;max-width:90%;height:100%;background:white;padding:1.25rem;box-shadow:-8px 0 24px rgba(2,6,23,.12);overflow:auto}
+    .mobile-panel nav{display:flex;flex-direction:column;gap:.6rem;margin-top:1rem}
+    .mobile-panel a{padding:.8rem;border-radius:8px;text-decoration:none;color:#111;font-weight:600}
+    .mobile-panel a:hover{background:#f3f4f6}
+    .mobile-close{margin-left:auto;background:none;border:0;font-size:1rem}
+
+    /* Animated transform for hamburger when active */
+    .hamburger.active .bar:nth-child(1){transform:translateY(6px) rotate(45deg)}
+    .hamburger.active .bar:nth-child(2){opacity:0}
+    .hamburger.active .bar:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .nav-links{display:none}
+      .hamburger{display:flex}
+    }
+
+    /* Pequeños estilos para demo del portafolio */
+    header.hero{min-height:60vh;display:grid;place-items:center;text-align:center;padding:3rem 1rem}
+    header.hero h1{font-size:2rem;margin-bottom:.6rem}
+    header.hero p{color:#374151;max-width:58ch;margin:0 auto}
+
+    /* Accesibilidad focus */
+    a:focus,button:focus{outline:3px solid rgba(79,70,229,.18);outline-offset:3px}
+    body {
+        background-image: url(https://img.freepik.com/fotos-premium/tecnologia-informacion-telecomunicaciones-tic-e-iot-fondo-futurista_161452-9003.jpg?w=2000);
+    }
+  </style>
+</head>
+<body>
+  <header class="nav container" role="banner">
+    <div class="brand" aria-hidden="false">
+      <div class="logo">DG</div>
+      <div class="brand-text">
+        <div style="font-size:.95rem">Daniel Gatica</div>
+        <div style="font-size:.7rem;color:#6b7280">Portafolio</div>
+      </div>
+    </div>
+
+    <!-- Links de escritorio -->
+    <nav class="nav-links" role="navigation" aria-label="Enlaces principales">
+      <a href="#inicio">Inicio</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#contacto">Contacto</a>
+      <a class="btn-primary" href="#contrata">Contrátame</a>
+    </nav>
+
+    <!-- Botón hamburguesa (visible en móvil) -->
+    <button class="hamburger" id="hambBtn" aria-label="Abrir menú" aria-controls="mobileNav" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </header>
+
+  <!-- Navegación móvil (overlay) -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-hidden="true">
+    <aside class="mobile-panel" tabindex="-1">
+      <div style="display:flex;align-items:center;gap:.7rem">
+        <div class="logo" style="width:36px;height:36px">YY</div>
+        <div>
+          <strong>Yony Yanqui</strong><div style="font-size:.8rem;color:#6b7280">Portafolio</div>
+        </div>
+        <button class="mobile-close" id="closeMobile" aria-label="Cerrar menú">✕</button>
+      </div>
+
+      <nav aria-label="Menú principal móvil">
+        <a href="#inicio">Inicio</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#contacto">Contacto</a>
+        <a class="btn-primary" href="#contrata">Contrátame</a>
+      </nav>
+
+      <hr style="margin:1rem 0;border-color:#eef2ff" />
+      <div style="font-size:.9rem;color:#6b7280">Sígueme</div>
+      <div style="display:flex;gap:.6rem;margin-top:.6rem">
+        <a href="#" class="btn-outline">GitHub</a>
+        <a href="#" class="btn-outline">Behance</a>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Demo hero section -->
+  <header class="hero">
+    <div class="container">
+      <h1 id="inicio">Hola, soy Daniel — Diseñador / Desarrollador</h1>
+      <p>Este es un ejemplo de navegación para un portafolio personal. Haz clic en el icono hamburguesa en pantallas pequeñas para abrir el menú móvil. El HTML es accesible y el botón soporta los atributos ARIA básicos.</p>
+    </div>
+  </header>
+
+  <main class="container" style="padding-bottom:4rem">
+    <section id="portfolio" style="margin-top:2rem">
+      <h2>Portfolio</h2>
+      <p>Galería y proyectos aquí (ejemplo)</p>
+    </section>
+
+    <section id="sobre-mi" style="margin-top:2rem">
+      <h2>Sobre mí</h2>
+      <p>Pequeña biografía.</p>
+    </section>
+
+    <section id="servicios" style="margin-top:2rem">
+      <h2>Servicios</h2>
+      <p>Servicios que ofreces.</p>
+    </section>
+
+    <section id="contacto" style="margin-top:2rem">
+      <h2>Contacto</h2>
+      <p>Formulario / correo.</p>
+      Este es un ejemplo de navegación para un portafolio personal. Haz clic en el icono hamburguesa en pantallas pequeñas para abrir el menú móvil. El HTML es accesible y el botón soporta los atributos ARIA básicos.
+        <form id="contactForm">
+            <!-- Campo de Nombre -->
+            <div class="form-group">
+                <label for="nombre">Nombre completo <span class="required">*</span></label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ingresa tu nombre completo">
+            </div>
+            
+            <!-- Campo de Email -->
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required placeholder="ejemplo@correo.com">
+            </div>
+            
+            <!-- Campo de Teléfono -->
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="+52 123 456 7890">
+            </div>
+            
+            <!-- Campo de Asunto -->
+            <div class="form-group">
+                <label for="asunto">Asunto <span class="required">*</span></label>
+                <select id="asunto" name="asunto" required>
+                    <option value="">Selecciona un asunto</option>
+                    <option value="consulta">Consulta</option>
+                    <option value="soporte">Soporte Técnico</option>
+                    <option value="ventas">Información de Ventas</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+            
+            <!-- Campo de Mensaje -->
+            <div class="form-group">
+                <label for="mensaje">Mensaje <span class="required">*</span></label>
+                <textarea id="mensaje" name="mensaje" required placeholder="Escribe tu mensaje aquí..."></textarea>
+            </div>
+            
+            <!-- Checkbox de Términos -->
+            <div class="checkbox-group">
+                <input type="checkbox" id="terminos" name="terminos" required>
+                <label for="terminos">Acepto los términos y condiciones</label>
+            </div>
+            
+            <!-- Botón de Envío -->
+            <button type="submit" class="btn">Enviar Mensaje</button>
+        </form>
+    </section>
+  </main>
+
+  <script>
+    // Control simple del menú móvil
+    const hambBtn = document.getElementById('hambBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeBtn = document.getElementById('closeMobile');
+
+    function openMobile(){
+      mobileNav.style.display = 'flex';
+      mobileNav.setAttribute('aria-hidden','false');
+      hambBtn.classList.add('active');
+      hambBtn.setAttribute('aria-expanded','true');
+      // trap focus basic
+      document.querySelector('.mobile-panel').focus();
+    }
+    function closeMobile(){
+      mobileNav.style.display = 'none';
+      mobileNav.setAttribute('aria-hidden','true');
+      hambBtn.classList.remove('active');
+      hambBtn.setAttribute('aria-expanded','false');
+      hambBtn.focus();
+    }
+
+    hambBtn.addEventListener('click', ()=>{
+      const opened = hambBtn.classList.contains('active');
+      if(opened) closeMobile(); else openMobile();
+    });
+
+    closeBtn.addEventListener('click', closeMobile);
+
+    // Cerrar al pulsar fuera del panel
+    mobileNav.addEventListener('click', (e)=>{
+      if(e.target === mobileNav) closeMobile();
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && hambBtn.classList.contains('active')) closeMobile();
+    });
+  </script>
+</body>
+</html>
